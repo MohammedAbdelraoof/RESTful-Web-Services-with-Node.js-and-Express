@@ -1,9 +1,12 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
+
 const app = express()
 const port = process.env.PORT || 3000
-const Product = require('./models/productModel')
-const Category = require('./models/categoryModel')
+
+const productRouter = require('./routers/productsRouter')
+const categoryRouter = require('./routers/categoryRouter')
 
 const uri = "mongodb+srv://mohammed:0000@productsdb.yyg2crv.mongodb.net/?retryWrites=true&w=majority";
 try {
@@ -13,8 +16,14 @@ try {
     console.log("faild to connect");
 }
 
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+
+
+app.use('/', productRouter)
+app.use('/', categoryRouter)
 app.get('/', (req, res) => {
-    res.send('Welcome to my nodemon API!')
+    res.send('Welcome Products App')
 })
 app.listen(port, () => {
     console.log('Running on port ' + port);
