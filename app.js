@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 
 const app = express()
 const port = process.env.PORT || 3000
+const cors = require('cors')
 
 const productRouter = require('./routers/productsRouter')
 const categoryRouter = require('./routers/categoryRouter')
@@ -15,7 +16,8 @@ try {
 } catch (error) {
     console.log("faild to connect");
 }
-
+// Enable Cors for all routes
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 

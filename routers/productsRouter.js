@@ -12,28 +12,28 @@ productRouter.route('/products')
             if (err) {
                 return res.send(err)
             }
-            return res.json(products)
+            return res.json({ success: true, results: products })
         })
     })
     .post((req, res) => {
         const product = new Product(req.body)
         product.save()
-        return res.status(201).json(product)
+        return res.status(201).json({ success: true, results: product, message: "Product added successfully" })
     })
 
 productRouter.route('/products/:id')
     .get((req, res) => {
         Product.findById(req.params.id, (err, product) => {
             if (err) {
-                return res.send(err)
+                return res.send({ success: false, message: "No product with this id", err: err })
             }
-            return res.json(product)
+            return res.json({ success: true, results: product })
         })
     })
     .put((req, res) => {
         Product.findById(req.params.id, (err, product) => {
             if (err) {
-                return res.send(err)
+                return res.send({ success: false, err: err, message: "faild to update the product" })
             }
             product.name = req.body.name
             product.price = req.body.price
@@ -41,7 +41,7 @@ productRouter.route('/products/:id')
             product.imgURL = req.body.imgURL
             product.categoryID = req.body.categoryID
             product.save()
-            return res.json(product)
+            return res.json({ success: true, results: product, message: "Product updated successfully" })
         })
     })
     .patch((req, res) => {
@@ -56,18 +56,18 @@ productRouter.route('/products/:id')
         })
         req.product.save((err) => {
             if (err) {
-                return res.send(err);
+                return res.send({ success: false, err: err, message: "faild to update the product" });
             }
-            return res.json(product);
+            return res.json({ success: true, results: product, message: "Product updated successfully" });
         })
 
     })
     .delete((req, res) => {
         req.product.remove((err) => {
             if (err) {
-                return res.send(err);
+                return res.send({ success: false, err: err, message: "faild to delete the product" });
             }
-            return res.sendStatus(204);
+            return res.sendStatus(204).json({ success: true, message: "Product deleted successfully" });
         })
     });
 
