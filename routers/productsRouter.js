@@ -43,7 +43,8 @@ productRouter.route('/products/:id')
             product.save()
             return res.json(product)
         })
-    }).patch((req, res) => {
+    })
+    .patch((req, res) => {
         const { product } = req;
         if (req.body._id) {
             delete req.body._id;
@@ -60,7 +61,8 @@ productRouter.route('/products/:id')
             return res.json(product);
         })
 
-    }).delete((req, res) => {
+    })
+    .delete((req, res) => {
         req.product.remove((err) => {
             if (err) {
                 return res.send(err);
