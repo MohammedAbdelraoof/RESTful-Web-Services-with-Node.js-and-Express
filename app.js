@@ -9,7 +9,7 @@ const cors = require('cors')
 const productRouter = require('./routers/productsRouter')
 const categoryRouter = require('./routers/categoryRouter')
 
-const uri = "mongodb+srv://mohammed:0000@productsdb.yyg2crv.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://mohammed:0000@cluster0.j3v2rla.mongodb.net/?retryWrites=true&w=majority";
 try {
     mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, () =>
         console.log("connected to db"));
